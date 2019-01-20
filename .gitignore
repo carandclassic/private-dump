@@ -3,3 +3,4 @@ composer.phar
 .idea
 bin/
 configs/cac-private-dump.json
+.DS_Store
