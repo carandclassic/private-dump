@@ -199,6 +199,7 @@ If you need to use a hardcoded value (active=0, completed=1) you can do this by 
 - `phoneNumber`
 - `email` - bigben@example.com
 - `username` - BigBen
+- `password`
 - `url` - https://www.parliament.uk/bigben
 - `ipv4` - IPv4 Address
 - `ipv6` - IPv6 Address
