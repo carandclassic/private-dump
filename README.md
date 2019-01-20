@@ -89,6 +89,55 @@ private-dump -c private-dump.json -u bigben -p bingbong -h rds-213121231-13gb.am
 
 # Configuration File
 
+The configuration file is a JSON dictionary containing:
+
+- database connection details
+- list of databases to dump
+- list of tables with replacements or transformers
+  - columns with replacements or transformers
+  - options to restrict output
+    - `where` - Added to the query when retrieving data to dump: `... WHERE xxx...`
+    - `limit` - Added to the query when retrieving data to dump: `... LIMIT xxx...`
+
+
+
+An example configuration, and configurations for popular applications, exist in the [configs](configs/) directory.
+
+
+
+**Annotated Example Configuration - private-dump.json**
+
+```json
+{
+    "connection": { /* Database connection details */
+        "username": "bigben",
+        "password": "bingbong",
+        "hostname": "192.168.56.81"
+    },
+    "databases": { /* Databases to dump - databases not present will not be dumped */
+        "databaseName": { /* All tables in this database are dumped */
+            "tableName": { /* Referenced tables allow replacements */
+                "email_address": "@email", /* Column and its replacement */
+                "full_name": "@fullName",
+                "is_active": 0, /* Column with hardcoded value */
+                "$options": { /* Special options array for limit/where */
+                    "where": "last_login > NOW() - INTERVAL 1 WEEK",
+                    "limit": 25
+                }
+            }
+        },
+        "databaseTwo": {}, /* Dump entire database and tables, with no replacements */
+        "databaseThree": {
+            "users": {
+                "$options": { /* Only options to limit data, no replacements */
+                    "where": "is_active=1"
+                }
+            }
+        }
+    }
+}
+```
+
 
 
 # Replacements
