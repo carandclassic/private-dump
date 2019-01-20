@@ -14,6 +14,7 @@ Private Dump requires PHP >= 5.6.0
 - [Installation](#installation)
 - [Usage](#usage)
 - [Configuration File](#configuration-file)
+  - [Key Value Tables](#key-value-tables)
 - [Replacements](#replacements)
   - [Text](#text)
   - [Dates](#dates)
@@ -137,6 +138,36 @@ An example configuration, and configurations for popular applications, exist in 
     }
 }
 ```
+
+
+
+#### Key Value Tables
+
+Private Dump supports replacing values in a key-value store, by using an array in the configuration file to link the `value` column with the `key` column as below:
+
+```json
+{
+    "connection": {...},
+    "databases": {
+        "wordpress": {
+            "wp_options": {
+                "option_value": {
+                    "$link": "option_name",
+                    "$transformers": {
+                        "admin_email": "@email",
+                        "mailserver_pass": "@password",
+                        "autoload": "yes"
+                    }
+                }
+            }
+        }
+    }
+}
+```
+
+
+
+This is a bit more complicated than the standard replacements, but offers a lot of flexibility for anonymising all types of data. 
 
 
 
