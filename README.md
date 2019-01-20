@@ -109,7 +109,7 @@ An example configuration, and configurations for popular applications, exist in 
 
 ```json
 {
-    "connection": { /* Database connection details */
+    "connection": { # Database connection details
         "username": "bigben",
         "password": "bingbong",
         "hostname": "192.168.56.81"
