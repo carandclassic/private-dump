@@ -52,7 +52,7 @@ chmod a+x private-dump
 
 # Usage
 
-When private-dump is ran with a valid configuration it will output the dump to stdout, allowing you to redirect it to the file you like, or pipe it to another program (compression, transfer, encryption, etc..).
+When private-dump is ran with a valid configuration it will output the dump to stdout, allowing you to redirect it to a file, or pipe it to another program (for compression, transfer, encryption, etc..).
 
 
 
