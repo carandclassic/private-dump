@@ -7,6 +7,10 @@ Private Dump requires PHP >= 5.6.0
 
 
 
+![styleci-status](https://github.styleci.io/repos/166579859/shield)
+
+
+
 # Table of Contents
 
 - [Installation](#installation)
