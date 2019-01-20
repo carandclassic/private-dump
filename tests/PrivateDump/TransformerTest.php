@@ -32,4 +32,23 @@ class TransformerTest extends PHPUnit_Framework_TestCase
             $this->transformer->transform('test', '@iso8601Recent')
         );
     }
+
+    /** @test */
+    public function max_modifier_works()
+    {
+        $this->assertEquals(8, strlen($this->transformer->transform('test', '@userName|max:8')));
+    }
+
+    /** @test */
+    public function static_values_work()
+    {
+        $this->assertEquals('replacementValue', $this->transformer->transform('test', 'replacementValue'));
+    }
+
+    /** @test */
+    public function original_replacement_works()
+    {
+        $this->assertEquals('admin@example.com', $this->transformer->transform('admin@example.com', '@original'));
+        $this->assertEquals('admin@exa', $this->transformer->transform('admin@example.com', '@original|max:9'));
+    }
 }

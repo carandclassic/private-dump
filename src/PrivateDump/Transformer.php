@@ -33,6 +33,7 @@ class Transformer
      * Generate random string
      *
      * @param string $value
+     *
      * @return bool|string
      */
     public function transformString($value)
@@ -49,6 +50,7 @@ class Transformer
 
     /**
      * @param string $value
+     *
      * @return string
      */
     public function transformUppercase($value)
@@ -58,6 +60,7 @@ class Transformer
 
     /**
      * @param string $value
+     *
      * @return string
      */
     public function transformLowercase($value)
@@ -67,11 +70,22 @@ class Transformer
 
     /**
      * @param string $value
+     *
      * @return string
      */
     public function transformIso8601Recent($value)
     {
         return $this->faker->dateTimeBetween('-3 months')->format(\DateTime::ATOM);
+    }
+
+    /**
+     * @param $value
+     *
+     * @return mixed
+     */
+    public function transformOriginal($value)
+    {
+        return $value;
     }
 
     /**

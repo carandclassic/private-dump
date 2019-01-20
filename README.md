@@ -45,7 +45,7 @@ composer require ashleyhindle/private-dump
 Install with [curl](https://curl.haxx.se/)
 
 ```bash
-curl -Lo private-dump https://github.com/ashleyhindle/private-dump/releases/download/v0.0.5/private-dump
+curl -Lo private-dump https://github.com/ashleyhindle/private-dump/releases/download/v0.0.6/private-dump
 chmod a+x private-dump 
 ```
 
@@ -200,6 +200,7 @@ If you need to use a hardcoded value (active=0, completed=1) you can do this by 
 
 #### Text
 
+- `original` - The original value, useful to use for modifiers
 - `string` - Random length string up to 255 characters
 - `realText` - Quotes from books
 - `loremSentence` - 1 sentence of Lorem
