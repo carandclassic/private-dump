@@ -2,7 +2,7 @@
     "name": "ashleyhindle/private-dump",
     "description": "CLI script to dump your MySQL database, and sanitise the output of sensitive data for development/staging use",
     "type": "project",
-    "license": "GNU3",
+    "license": "MIT",
     "authors": [
         {
             "name": "Ashley Hindle",
