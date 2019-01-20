@@ -170,6 +170,7 @@ If you need to use a hardcoded value (active=0, completed=1) you can do this by 
 - `ipv6`
 - `userAgent`
 - `domainName` - bigben.net
+- `slug` - big-ben-bing-bong
 
 #### Random
 
