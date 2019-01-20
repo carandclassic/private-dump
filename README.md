@@ -15,6 +15,7 @@ Private Dump requires PHP >= 5.6.0
 - [Usage](#usage)
 - [Configuration File](#configuration-file)
   - [Key Value Tables](#key-value-tables)
+  - [Modifiers](#modifiers)
 - [Replacements](#replacements)
   - [Text](#text)
   - [Dates](#dates)
