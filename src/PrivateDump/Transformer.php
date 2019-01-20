@@ -82,6 +82,11 @@ class Transformer
      */
     public function transform($value, $replacement)
     {
+        // Doesn't start with @, just return the value in the config
+        if (strpos($replacement, '@') !== 0) {
+            return $replacement;
+        }
+
         $replacement = preg_replace('/^@/', '', $replacement);
         $originalReplacement = $replacement;
 

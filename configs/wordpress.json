@@ -13,6 +13,18 @@
                 "comment_author_IP": "@ipv4",
                 "comment_content": "@loremParagraphs"
             },
+            "wp_options": {
+                "autoload": "yes",
+                "option_value": {
+                    "$link": "option_name",
+                    "$transformers": {
+                        "admin_email": "@email",
+                        "mailserver_url": "@url",
+                        "mailserver_login": "@email",
+                        "mailserver_pass": "@randomString"
+                    }
+                }
+            },
             "wp_posts": {
                 "post_content": "@realText",
                 "post_title": "@loremSentence",

@@ -50,8 +50,7 @@ foreach ($databases as $databaseName => $tables) {
         $dumper->setTableWheres($tableWheres);
     }
 
-    $dumper->setTransformColumnValueHook(function ($tableName, $colName, $colValue) use ($tables, $transformer) {
-
+    $dumper->setTransformColumnValueHook(function ($tableName, $colName, $colValue, $row) use ($tables, $transformer) {
         // No transformers for this table
         if (!array_key_exists($tableName, $tables)) {
             return $colValue;
@@ -64,9 +63,22 @@ foreach ($databases as $databaseName => $tables) {
 
         $columnReplacer = $tables[$tableName][$colName];
 
-        // Doesn't start with @, just return the value in the config
-        if (strpos($columnReplacer, '@') !== 0) {
-            return $columnReplacer;
+        // Key value store, but also possible $options
+        if (is_array($columnReplacer)) {
+            // Key value store - $where on a different column name
+            // If the value matches a key in '$transformers' then we can replace the value as normal, otherwise
+            //    we will return the value as it is
+            if (!empty($columnReplacer['$link'])) {
+                foreach ($columnReplacer['$transformers'] as $associateColumnValue => $replacer) {
+                    // If this colValue == associate_column's value, then we can replace
+                    if ($associateColumnValue == $row[$columnReplacer['$link']]) {
+                        return $transformer->transform($colValue, $replacer);
+                    }
+                }
+            }
+
+            // Backup - return same column value if an array and no ^ transformer above
+            return $colValue;
         }
 
         return $transformer->transform($colValue, $columnReplacer);
