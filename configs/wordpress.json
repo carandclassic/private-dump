@@ -1,0 +1,34 @@
+{
+    "connection": {
+        "username": "wordpress",
+        "password": "ssrepdrow",
+        "hostname": "127.0.0.1"
+    },
+    "databases": {
+        "wordpress": {
+            "wp_comments": {
+                "comment_author": "@fullName",
+                "comment_author_email": "@email",
+                "comment_author_url": "@url",
+                "comment_author_IP": "@ipv4",
+                "comment_content": "@loremParagraphs"
+            },
+            "wp_posts": {
+                "post_content": "@realText",
+                "post_title": "@loremSentence",
+                "post_excerpt": "@loremSentece",
+                "post_password": "@randomString",
+                "post_name": "@slug",
+                "post_content_filtered": ""
+            },
+            "wp_users": {
+                "user_login": "@userName",
+                "user_pass": "$P$BdR7ki6qsPuDEo4YZrQsve/.yqbeDX/",
+                "user_nicename": "@fullName",
+                "user_email": "@email",
+                "user_url": "@url",
+                "display_name": "@fullName"
+            }
+        }
+    }
+}
