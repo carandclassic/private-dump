@@ -194,14 +194,7 @@ If you need to use a hardcoded value (active=0, completed=1) you can do this by 
 
 
 
-# Notes
-
-- This would not be possible without [Faker](https://github.com/fzaninotto/Faker)
-- Inspired by [GDPR-Dump](https://github.com/machbarmacher/gdpr-dump)
-
 ----
-
-
 
 
 
