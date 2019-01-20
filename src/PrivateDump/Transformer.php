@@ -105,7 +105,7 @@ class Transformer
 
         // Transformer has modifiers, let's use them
         if (strpos($replacement, '|') !== false) {
-            list ($replacement, $modifiers) = explode('|', $replacement, 2);
+            list($replacement, $modifiers) = explode('|', $replacement, 2);
             $modifiers = explode(',', $modifiers);
         }
 
@@ -141,7 +141,7 @@ class Transformer
         }
 
         foreach ($modifiers as $modifier) {
-            list ($rule, $modifierValue) = explode(':', $modifier);
+            list($rule, $modifierValue) = explode(':', $modifier);
             switch ($rule) {
                 case 'max':
                     return substr($value, 0, $modifierValue);
