@@ -44,7 +44,7 @@ composer require ashleyhindle/private-dump
 Install with [curl](https://curl.haxx.se/)
 
 ```bash
-curl -o private-dump https://github.com/ashleyhindle/private-dump/releases/download/v0.0.1/private-dump
+curl -o private-dump https://github.com/ashleyhindle/private-dump/releases/download/v0.0.3/private-dump
 chmod a+x private-dump 
 ```
 
@@ -214,7 +214,7 @@ If you need to use a hardcoded value (active=0, completed=1) you can do this by 
 
 1. Build the PHAR: `box build`
 2. Rename the PHAR: `mv bin/private-dump.phar bin/private-dump`
-3. Update the version in `README.md`'s installation instructions
+3. Update the version in `README.md`'s installation instructions based on the next version from `git tag --list`
 4. Tag the next release: `git tag -a vx.x.x -m "Release x.x.x"`
 5. Push: `git push origin --tags`
 6. [Edit release on GitHub](https://github.com/ashleyhindle/private-dump/releases/) attaching the newly created `bin/private-dump` file
