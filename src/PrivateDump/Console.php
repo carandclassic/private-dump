@@ -10,7 +10,8 @@ class Console
      * @param string $message
      * @param int $exitCode
      */
-    public function error($message, $exitCode) {
+    public function error($message, $exitCode)
+    {
         echo sprintf('[error] %s%s', $message, PHP_EOL);
         exit($exitCode);
     }

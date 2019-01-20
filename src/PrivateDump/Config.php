@@ -30,6 +30,7 @@ class Config
     /**
      * @param string $key
      * @param string $default
+     *
      * @return array|mixed|null
      */
     public function get($key, $default = null)
@@ -39,6 +40,7 @@ class Config
 
     /**
      * @param string $databaseName
+     *
      * @return string
      */
     public function getDSN($databaseName)
@@ -47,7 +49,8 @@ class Config
     }
 
     /**
-     * Read the filename and set the config param*
+     * Read the filename and set the config param.
+     *
      * @return bool
      */
     public function parseConfig()
@@ -55,12 +58,14 @@ class Config
         $fileContents = file_get_contents($this->filename);
         if (!$fileContents) {
             $this->error = 'Failed to read file contents';
+
             return false;
         }
 
         $config = json_decode($fileContents, true);
         if (json_last_error()) {
             $this->error = json_last_error_msg();
+
             return false;
         }
 
@@ -68,6 +73,7 @@ class Config
 
         return true;
     }
+
     /**
      * Is the config valid?
      *
@@ -77,11 +83,13 @@ class Config
     {
         if (!file_exists($this->filename)) {
             $this->error = 'File does not exist';
+
             return false;
         }
 
         if (!is_readable($this->filename)) {
             $this->error = 'File is not readable';
+
             return false;
         }
 
@@ -99,6 +107,7 @@ class Config
 
         if ($numberOfDatabases === 0) {
             $this->error = 'No database configuration provided.  Cannot continue.';
+
             return false;
         }
 
