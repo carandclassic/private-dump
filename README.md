@@ -1,13 +1,13 @@
 # Private Dump
-Private Dump is a CLI script which can dump your MySQL database, and sanitise the output for development/staging use.
+Private Dump is a CLI tool which can dump your MySQL database, and anonymise the output for development/staging use.
 
 It accomplishes this by reading a JSON configuration file which maps out which table columns should be replaced, and by what.
 
-Private Dump requires PHP >= 5.6.0
+
 
 ![travis-ci-build-status](https://travis-ci.org/ashleyhindle/private-dump.svg?branch=master) ![styleci-status](https://github.styleci.io/repos/166579859/shield)
 
-
+Private Dump requires PHP >= 5.6.0
 
 # Table of Contents
 
