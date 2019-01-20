@@ -7,7 +7,7 @@
   "databases": {
     "my-blog": {
       "users": {
-        "username": "@username|min:5,max:25",
+        "username": "@username",
         "email": "@email",
         "password": "@password",
         "address": "@fullAddress",
@@ -15,7 +15,7 @@
         "name": "@fullName"
       },
       "comments": {
-        "comment": "@realtext"
+        "comment": "@realText"
       },
       "webhooks": {
         "url": "@url",
@@ -25,7 +25,12 @@
         "card_number": "@creditCardNumber"
       },
       "log": {
-        "node_name": "@regex|"
+        "node_name": "@string"
+      }
+    },
+    "stats-database": {
+      "hits": {
+        "ip_address": "@ipv4"
       }
     }
   }

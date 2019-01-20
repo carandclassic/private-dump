@@ -1,3 +1,5 @@
 composer.phar
 /vendor/
 .idea
+bin/
+configs/cac-private-dump.json

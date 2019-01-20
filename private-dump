@@ -2,13 +2,65 @@
 <?php
 require_once __DIR__ . '/vendor/autoload.php';
 
+$dumpSettings = [
+    'add-drop-database' => true,
+    'add-drop-table' => true,
+    'single-transaction' => true,
+];
+
+$console = new PrivateDump\Console();
+
 $cli = new Commando\Command();
 $cli->setHelp('Must create a JSON configuration file to specify data transformers - documentation https://github.com/ashleyhindle/private-dump');
-$cli->option('u')->aka('user')->description('MySQL Username - overrides value in config file');
+$cli->option('c')->aka('configuration')->required()->description('Path to configuration file, defaults to private-dump.json')->defaultsTo('private-dump.json');
+$cli->option('u')->aka('username')->description('MySQL Username - overrides value in config file');
 $cli->option('p')->aka('password')->description('MySQL Password - overrides value in config file');
-$cli->option('h')->aka('host')->description('MySQL Hostname - overrides value in config file');
+$cli->option('h')->aka('hostname')->description('MySQL Hostname - overrides value in config file');
 
+$overrides = [
+    'username' => $cli['username'],
+    'password' => $cli['password'],
+    'hostname' => $cli['hostname'],
+];
 
-$bogies = new PrivateDump\Bogies();
-// private-dump -u root -p
-echo "END" . PHP_EOL;
+// We have to do this to allow empty strings (passwords mainly)
+$overrides = array_filter($overrides, function ($value) {
+   return $value !== null;
+});
+
+$config = new PrivateDump\Config($cli['configuration'], ['mysql' => $overrides]);
+$transformer = new PrivateDump\Transformer(Faker\Factory::create('en_GB'));
+
+if (!$config->isValid()) {
+    $console->error("Configuration ({$cli['configuration']}) isn't valid: {$config->getError()}", 1);
+}
+
+$databases = $config->get('databases');
+
+foreach ($databases as $databaseName => $tables) {
+    $dumper = new \Ifsnop\Mysqldump\Mysqldump($config->getDSN($databaseName), $config->get('mysql.username'), $config->get('mysql.password'), $dumpSettings);
+
+    $dumper->setTransformColumnValueHook(function ($tableName, $colName, $colValue) use ($tables, $transformer) {
+
+        // No transformers for this table
+        if (!array_key_exists($tableName, $tables)) {
+            return $colValue;
+        }
+
+        // This column doesn't have a transformer
+        if (!array_key_exists($colName, $tables[$tableName])) {
+            return $colValue;
+        }
+
+        $columnReplacer = $tables[$tableName][$colName];
+
+        // Doesn't start with @, just return the value in the config
+        if (strpos($columnReplacer, '@') !== 0) {
+            return $columnReplacer;
+        }
+
+        return $transformer->transform($colValue, $columnReplacer);
+    });
+
+    $dumper->start('php://output');
+}
