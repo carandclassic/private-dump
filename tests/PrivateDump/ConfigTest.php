@@ -15,7 +15,9 @@ class ConfigTest extends PHPUnit_Framework_TestCase
             'password' => 'expelliarmus'
         ]]);
 
+        $this->assertEquals('root', $this->config->get('connection.username'));
         $this->assertEquals('expelliarmus', $this->config->get('connection.password'));
+        $this->assertEquals('localhost', $this->config->get('connection.hostname'));
     }
 
     /** @test */
