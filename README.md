@@ -215,11 +215,11 @@ If you need to use a hardcoded value (active=0, completed=1) you can do this by 
 4. `chmod a+x bin/private-dump.phar`
 
 
-
 # Release Process
 
 1. Build the PHAR: `box build`
-2. Update the version in `README.md`'s installation instructions
-2. Tag the next release: `git tag -a vx.x.x -m "Release x.x.x"`
-3. Push: `git push origin --tags`
-4. [Create release on GitHub](https://github.com/ashleyhindle/private-dump/releases/new) attaching the newly created `bin/private-dump.phar` file
+2. Rename the PHAR: `mv bin/private-dump.phar bin/private-dump`
+3. Update the version in `README.md`'s installation instructions
+4. Tag the next release: `git tag -a vx.x.x -m "Release x.x.x"`
+5. Push: `git push origin --tags`
+6. [Edit release on GitHub](https://github.com/ashleyhindle/private-dump/releases/) attaching the newly created `bin/private-dump` file

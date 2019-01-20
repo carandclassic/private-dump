@@ -29,10 +29,12 @@ class Config
 
     /**
      * @param string $key
+     * @param string $default
      * @return array|mixed|null
      */
-    public function get($key) {
-        return $this->config->get($key);
+    public function get($key, $default = null)
+    {
+        return $this->config->get($key, $default);
     }
 
     /**
@@ -44,6 +46,28 @@ class Config
         return sprintf('mysql:host=%s;dbname=%s', $this->get('mysql.hostname'), $databaseName);
     }
 
+    /**
+     * Read the filename and set the config param*
+     * @return bool
+     */
+    public function parseConfig()
+    {
+        $fileContents = file_get_contents($this->filename);
+        if (!$fileContents) {
+            $this->error = 'Failed to read file contents';
+            return false;
+        }
+
+        $config = json_decode($fileContents, true);
+        if (json_last_error()) {
+            $this->error = json_last_error_msg();
+            return false;
+        }
+
+        $this->config = new Data(array_replace_recursive($config, $this->overrides));
+
+        return true;
+    }
     /**
      * Is the config valid?
      *
@@ -61,19 +85,9 @@ class Config
             return false;
         }
 
-        $fileContents = file_get_contents($this->filename);
-        if (!$fileContents) {
-            $this->error = 'Failed to read file contents';
+        if (!$this->parseConfig()) {
             return false;
         }
-
-        $config = json_decode($fileContents, true);
-        if (json_last_error()) {
-            $this->error = json_last_error_msg();
-            return false;
-        }
-
-        $this->config = new Data(array_replace_recursive($config, $this->overrides));
 
         foreach ($this->mysqlConfigRequired as $configKeyRequired) {
             if (!array_key_exists($configKeyRequired, $this->config->get('mysql')) || is_null($this->config->get('mysql.'.$configKeyRequired))) {
@@ -81,7 +95,7 @@ class Config
             }
         }
 
-        $numberOfDatabases = count($this->get('databases'));
+        $numberOfDatabases = count($this->get('databases', []));
 
         if ($numberOfDatabases === 0) {
             $this->error = 'No database configuration provided.  Cannot continue.';
