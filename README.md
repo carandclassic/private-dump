@@ -201,7 +201,7 @@ If you need to use a hardcoded value (active=0, completed=1) you can do this by 
 
 #### Text
 
-- `original` - The original value, useful to use for modifiers
+- `original` - The original value, useful to use with modifiers
 - `string` - Random length string up to 255 characters
 - `realText` - Quotes from books
 - `loremSentence` - 1 sentence of Lorem
