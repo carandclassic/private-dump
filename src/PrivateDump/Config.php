@@ -11,7 +11,7 @@ class Config
     /** @var Data */
     private $config;
     private $overrides = [];
-    private $mysqlConfigRequired = [
+    private $connectionConfigRequired = [
         'username',
         'password',
         'hostname',
@@ -45,7 +45,7 @@ class Config
      */
     public function getDSN($databaseName)
     {
-        return sprintf('mysql:host=%s;dbname=%s', $this->get('mysql.hostname'), $databaseName);
+        return sprintf('mysql:host=%s;dbname=%s', $this->get('connection.hostname'), $databaseName);
     }
 
     /**
@@ -97,9 +97,9 @@ class Config
             return false;
         }
 
-        foreach ($this->mysqlConfigRequired as $configKeyRequired) {
-            if (!array_key_exists($configKeyRequired, $this->config->get('mysql')) || is_null($this->config->get('mysql.'.$configKeyRequired))) {
-                $this->error = sprintf('MySQL config key missing or null: %s', $configKeyRequired);
+        foreach ($this->connectionConfigRequired as $configKeyRequired) {
+            if (!array_key_exists($configKeyRequired, $this->config->get('connection')) || is_null($this->config->get('connection.'.$configKeyRequired))) {
+                $this->error = sprintf('Connection config key missing or null: %s', $configKeyRequired);
             }
         }
 

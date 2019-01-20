@@ -9,13 +9,13 @@ class ConfigTest extends PHPUnit_Framework_TestCase
     private $filename = '';
 
     /** @test */
-    public function weCanOverrideMySQLConfig()
+    public function weCanOverrideConnectionConfig()
     {
-        $this->getConfig('{"mysql": {"username": "root", "password": "bigben", "hostname": "localhost"}, "databases": {"test": {}}}', ['mysql' => [
+        $this->getConfig('{"connection": {"username": "root", "password": "bigben", "hostname": "localhost"}, "databases": {"test": {}}}', ['connection' => [
             'password' => 'expelliarmus'
         ]]);
 
-        $this->assertEquals('expelliarmus', $this->config->get('mysql.password'));
+        $this->assertEquals('expelliarmus', $this->config->get('connection.password'));
     }
 
     /** @test */
@@ -25,14 +25,14 @@ class ConfigTest extends PHPUnit_Framework_TestCase
         $this->assertFalse($this->getConfig('BAD JSON')->isValid());
 
         // No databases
-        $this->assertFalse($this->getConfig('{"mysql": {"username": "root", "password": "bigben", "hostname": "localhost"}')->isValid());
+        $this->assertFalse($this->getConfig('{"connection": {"username": "root", "password": "bigben", "hostname": "localhost"}')->isValid());
     }
 
     public function testGet()
     {
-        $this->assertEquals('bigben', $this->config->get('mysql.password'));
-        $this->assertEquals('localhost', $this->config->get('mysql.hostname'));
-        $this->assertEquals('root', $this->config->get('mysql.username'));
+        $this->assertEquals('bigben', $this->config->get('connection.password'));
+        $this->assertEquals('localhost', $this->config->get('connection.hostname'));
+        $this->assertEquals('root', $this->config->get('connection.username'));
     }
 
     public function testGetDSN()
@@ -49,7 +49,7 @@ class ConfigTest extends PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->getConfig('{"mysql": {"username": "root", "password": "bigben", "hostname": "localhost"}, "databases": {"test": {}}}');
+        $this->getConfig('{"connection": {"username": "root", "password": "bigben", "hostname": "localhost"}, "databases": {"test": {}}}');
     }
 
     protected function getConfig($json, $overrides=[])

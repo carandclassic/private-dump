@@ -13,9 +13,9 @@ $console = new PrivateDump\Console();
 $cli = new Commando\Command();
 $cli->setHelp('Must create a JSON configuration file to specify data transformers - documentation https://github.com/ashleyhindle/private-dump');
 $cli->option('c')->aka('configuration')->required()->description('Path to configuration file, defaults to private-dump.json')->defaultsTo('private-dump.json');
-$cli->option('u')->aka('username')->description('MySQL Username - overrides value in config file');
-$cli->option('p')->aka('password')->description('MySQL Password - overrides value in config file');
-$cli->option('h')->aka('hostname')->description('MySQL Hostname - overrides value in config file');
+$cli->option('u')->aka('username')->description('Connection Username - overrides value in config file');
+$cli->option('p')->aka('password')->description('Connection Password - overrides value in config file');
+$cli->option('h')->aka('hostname')->description('Connection Hostname - overrides value in config file');
 
 $overrides = [
     'username' => $cli['username'],
@@ -28,7 +28,7 @@ $overrides = array_filter($overrides, function ($value) {
    return $value !== null;
 });
 
-$config = new PrivateDump\Config($cli['configuration'], ['mysql' => $overrides]);
+$config = new PrivateDump\Config($cli['configuration'], ['connection' => $overrides]);
 $transformer = new PrivateDump\Transformer(Faker\Factory::create('en_GB'));
 
 if (!$config->isValid()) {
