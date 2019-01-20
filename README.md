@@ -171,6 +171,23 @@ This is a bit more complicated than the standard replacements, but offers a lot 
 
 
 
+#### Modifiers
+
+You can modify the resulting value (after replacements/transformers) to various ends.  The only currently supported modifier is `max` with more coming:
+
+```json
+{
+    "connection": {..},
+    "databases": {
+        ...
+        "username_column": "@userName|max:20"
+        ...
+    }
+}
+```
+
+
+
 # Replacements
 
 The vast majority of these are made possible by the amazing [Faker library](https://github.com/fzaninotto/Faker).  Most formatters listed in [Faker's documentation](https://github.com/fzaninotto/Faker#formatters) are supported in Private Dump's configuration file

@@ -76,15 +76,23 @@ class Transformer
 
     /**
      * Transform given value based on the replacement string provided from the JSON
-     * @param $value
-     * @param $replacement
+     * @param string $value
+     * @param string $replacement
+     *
      * @return mixed
      */
     public function transform($value, $replacement)
     {
+        $modifiers = [];
         // Doesn't start with @, just return the value in the config
         if (strpos($replacement, '@') !== 0) {
             return $replacement;
+        }
+
+        // Transformer has modifiers, let's use them
+        if (strpos($replacement, '|') !== false) {
+            list ($replacement, $modifiers) = explode('|', $replacement, 2);
+            $modifiers = explode(',', $modifiers);
         }
 
         $replacement = preg_replace('/^@/', '', $replacement);
@@ -95,17 +103,40 @@ class Transformer
         }
 
         $ownMethod = sprintf('transform%s', ucwords(strtolower($replacement)));
-        if (method_exists($this, $ownMethod)) {
-            return $this->$ownMethod($value);
-        }
 
         try {
-            $newValue = $this->faker->$replacement;
+            $newValue = method_exists($this, $ownMethod) ? $this->$ownMethod($value) : $this->faker->$replacement;
         } catch (\Exception $e) {
             echo sprintf('[error] Transformer not found, please fix and retry: [%s]', $originalReplacement) . PHP_EOL;
             exit(9);
         }
 
-        return $newValue;
+        return $this->modifyValue($newValue, $modifiers);
+    }
+
+    /**
+     * @param $value
+     * @param array $modifiers - Modifiers for the resulting value, currently only supporting 'max'. E.g. min:4,max:40
+     *
+     * @return string
+     */
+    private function modifyValue($value, array $modifiers)
+    {
+        if (empty($modifiers)) {
+            return $value;
+        }
+
+        foreach ($modifiers as $modifier) {
+            list ($rule, $modifierValue) = explode(':', $modifier);
+            switch ($rule) {
+                case 'max':
+                    return substr($value, 0, $modifierValue);
+                    break;
+                default:
+                    return $value;
+            }
+        }
+
+        return $value;
     }
 }

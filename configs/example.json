@@ -11,7 +11,7 @@
                     "where": "date_registered > NOW() - INTERVAL 3 MONTH and is_deleted=0",
                     "limit": 300
                 },
-                "username": "@username",
+                "username": "@username|max:20",
                 "email": "@email",
                 "password": "@password",
                 "address": "@fullAddress",
