@@ -1,37 +1,41 @@
 {
-  "mysql": {
-    "username": "root",
-    "password": "Do-a-deer-a-female-deer",
-    "hostname": "127.0.0.1"
-  },
-  "databases": {
-    "my-blog": {
-      "users": {
-        "username": "@username",
-        "email": "@email",
-        "password": "@password",
-        "address": "@fullAddress",
-        "phone": "@phoneNumber",
-        "name": "@fullName"
-      },
-      "comments": {
-        "comment": "@realText"
-      },
-      "webhooks": {
-        "url": "@url",
-        "active": 0
-      },
-      "payments": {
-        "card_number": "@creditCardNumber"
-      },
-      "log": {
-        "node_name": "@string"
-      }
+    "connection": {
+        "username": "root",
+        "password": "Do-a-deer-a-female-deer",
+        "hostname": "127.0.0.1"
     },
-    "stats-database": {
-      "hits": {
-        "ip_address": "@ipv4"
-      }
+    "databases": {
+        "my-blog": {
+            "users": {
+                "$options": {
+                    "where": "date_registered > NOW() - INTERVAL 3 MONTH and is_deleted=0",
+                    "limit": 300
+                },
+                "username": "@username",
+                "email": "@email",
+                "password": "@password",
+                "address": "@fullAddress",
+                "phone": "@phoneNumber",
+                "name": "@fullName"
+            },
+            "comments": {
+                "comment": "@realText"
+            },
+            "webhooks": {
+                "url": "@url",
+                "active": 0
+            },
+            "payments": {
+                "card_number": "@creditCardNumber"
+            },
+            "log": {
+                "node_name": "@string"
+            }
+        },
+        "stats-database": {
+            "hits": {
+                "ip_address": "@ipv4"
+            }
+        }
     }
-  }
 }

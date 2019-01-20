@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "69cb0cf780db169d6c65a1d530e80de6",
+    "content-hash": "461cda420d76082a81404501375d31f4",
     "packages": [
         {
             "name": "dflydev/dot-access-data",
@@ -117,22 +117,23 @@
         },
         {
             "name": "ifsnop/mysqldump-php",
-            "version": "v2.6",
+            "version": "dev-feature/allow-where-per-table",
             "source": {
                 "type": "git",
-                "url": "https://github.com/ifsnop/mysqldump-php.git",
-                "reference": "d830857e93c3f309fd63768c0fe6d13d9240fc70"
+                "url": "https://github.com/ashleyhindle/mysqldump-php.git",
+                "reference": "d703e599abfebe29423cac6262d5988734057d78"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ifsnop/mysqldump-php/zipball/d830857e93c3f309fd63768c0fe6d13d9240fc70",
-                "reference": "d830857e93c3f309fd63768c0fe6d13d9240fc70",
+                "url": "https://api.github.com/repos/ashleyhindle/mysqldump-php/zipball/d703e599abfebe29423cac6262d5988734057d78",
+                "reference": "d703e599abfebe29423cac6262d5988734057d78",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.0"
             },
             "require-dev": {
+                "phpunit/phpunit": "4.8.36",
                 "squizlabs/php_codesniffer": "1.*"
             },
             "type": "library",
@@ -141,7 +142,6 @@
                     "Ifsnop\\": "src/Ifsnop/"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "GPL-3.0-or-later"
             ],
@@ -155,7 +155,6 @@
             "description": "PHP version of mysqldump cli that comes with MySQL",
             "homepage": "https://github.com/ifsnop/mysqldump-php",
             "keywords": [
-                "PHP7",
                 "database",
                 "hhvm",
                 "mariadb",
@@ -165,9 +164,13 @@
                 "pdo",
                 "php",
                 "php5",
+                "php7",
                 "sql"
             ],
-            "time": "2018-12-27T00:33:19+00:00"
+            "support": {
+                "source": "https://github.com/ashleyhindle/mysqldump-php/tree/feature/allow-where-per-table"
+            },
+            "time": "2019-01-20T17:43:10+00:00"
         },
         {
             "name": "kevinlebrun/colors.php",
@@ -1650,7 +1653,9 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "ifsnop/mysqldump-php": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {

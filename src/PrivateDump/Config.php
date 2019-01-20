@@ -7,6 +7,7 @@ class Config
 {
     private $filename;
     private $error;
+    private $optionKey = '$options';
 
     /** @var Data */
     private $config;
@@ -124,5 +125,61 @@ class Config
     public function getError()
     {
         return $this->error;
+    }
+
+    /**
+     * @param $databaseName
+     *
+     * @return array
+     */
+    public function getTableLimits($databaseName)
+    {
+        $databases = $this->get('databases');
+        if (!array_key_exists($databaseName, $databases)) {
+            return [];
+        }
+        $limits = [];
+
+        foreach ($databases[$databaseName] as $tableName => $table) {
+            if (!array_key_exists($this->optionKey, $table)) {
+                continue;
+            }
+
+            if (!array_key_exists('limit', $table[$this->optionKey])) {
+                continue;
+            }
+
+            $limits[$tableName] = $table[$this->optionKey]['limit'];
+        }
+
+        return $limits;
+    }
+
+    /**
+     * @param $databaseName
+     *
+     * @return array
+     */
+    public function getTableWheres($databaseName)
+    {
+        $databases = $this->get('databases');
+        if (!array_key_exists($databaseName, $databases)) {
+            return [];
+        }
+        $limits = [];
+
+        foreach ($databases[$databaseName] as $tableName => $table) {
+            if (!array_key_exists($this->optionKey, $table)) {
+                continue;
+            }
+
+            if (!array_key_exists('where', $table[$this->optionKey])) {
+                continue;
+            }
+
+            $limits[$tableName] = $table[$this->optionKey]['where'];
+        }
+
+        return $limits;
     }
 }

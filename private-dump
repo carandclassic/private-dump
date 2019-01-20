@@ -40,6 +40,16 @@ $databases = $config->get('databases');
 foreach ($databases as $databaseName => $tables) {
     $dumper = new \Ifsnop\Mysqldump\Mysqldump($config->getDSN($databaseName), $config->get('mysql.username'), $config->get('mysql.password'), $dumpSettings);
 
+    $tableLimits = $config->getTableLimits($databaseName);
+    if (!empty($tableLimits)) {
+        $dumper->setTableLimits($tableLimits);
+    }
+
+    $tableWheres = $config->getTableWheres($databaseName);
+    if (!empty($tableWheres)) {
+        $dumper->setTableWheres($tableWheres);
+    }
+
     $dumper->setTransformColumnValueHook(function ($tableName, $colName, $colValue) use ($tables, $transformer) {
 
         // No transformers for this table
