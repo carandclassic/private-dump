@@ -36,7 +36,7 @@ class TransformerTest extends PHPUnit_Framework_TestCase
     /** @test */
     public function max_modifier_works()
     {
-        $this->assertEquals(8, strlen($this->transformer->transform('test', '@userName|max:8')));
+        $this->assertEquals(8, strlen($this->transformer->transform('test', '@randomString|max:8')));
     }
 
     /** @test */
