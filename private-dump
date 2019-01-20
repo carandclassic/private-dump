@@ -38,7 +38,7 @@ if (!$config->isValid()) {
 $databases = $config->get('databases');
 
 foreach ($databases as $databaseName => $tables) {
-    $dumper = new \Ifsnop\Mysqldump\Mysqldump($config->getDSN($databaseName), $config->get('mysql.username'), $config->get('mysql.password'), $dumpSettings);
+    $dumper = new \Ifsnop\Mysqldump\Mysqldump($config->getDSN($databaseName), $config->get('connection.username'), $config->get('connection.password'), $dumpSettings);
 
     $tableLimits = $config->getTableLimits($databaseName);
     if (!empty($tableLimits)) {
@@ -72,5 +72,9 @@ foreach ($databases as $databaseName => $tables) {
         return $transformer->transform($colValue, $columnReplacer);
     });
 
-    $dumper->start('php://output');
+    try {
+        $dumper->start('php://output');
+    } catch (\Exception $e) {
+        $console->error("Failed to dump: {$e->getMessage()}", 3);
+    }
 }
