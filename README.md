@@ -5,9 +5,7 @@ It accomplishes this by reading a JSON configuration file which maps out which t
 
 Private Dump requires PHP >= 5.6.0
 
-![travis-ci-build-status](https://travis-ci.org/ashleyhindle/private-dump.svg?branch=master)
-
-![styleci-status](https://github.styleci.io/repos/166579859/shield)
+![travis-ci-build-status](https://travis-ci.org/ashleyhindle/private-dump.svg?branch=master) ![styleci-status](https://github.styleci.io/repos/166579859/shield)
 
 
 
