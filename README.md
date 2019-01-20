@@ -203,7 +203,7 @@ If you need to use a hardcoded value (active=0, completed=1) you can do this by 
 
 
 
-These notes are mainly for my own development use, feel free to ignore.**
+*These notes are mainly for my own development use, feel free to ignore.*
 
 
 
