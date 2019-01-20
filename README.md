@@ -109,13 +109,13 @@ An example configuration, and configurations for popular applications, exist in 
 
 ```json
 {
-    "connection": { # Database connection details
+    "connection": { `Database connection details`
         "username": "bigben",
         "password": "bingbong",
         "hostname": "192.168.56.81"
     },
-    "databases": { /* Databases to dump - databases not present will not be dumped */
-        "databaseName": { /* All tables in this database are dumped */
+    "databases": { -- Databases to dump - databases not present will not be dumped
+        "databaseName": {  // All tables in this database are dumped
             "tableName": { /* Referenced tables allow replacements */
                 "email_address": "@email", /* Column and its replacement */
                 "full_name": "@fullName",
