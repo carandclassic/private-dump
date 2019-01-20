@@ -1,7 +1,7 @@
 # Private Dump
-Private Dump is a CLI tool which can dump your MySQL database, and anonymise the output for development/staging use.
+Private Dump is a CLI tool which can create an anonymised dump of your MySQL database, usually for development or staging use.
 
-It accomplishes this by reading a JSON configuration file which maps out which table columns should be replaced, and by what.
+It accomplishes this by reading a JSON configuration file which maps out which table columns should be modified and how.
 
 
 
