@@ -6,6 +6,7 @@ $dumpSettings = [
     'add-drop-database' => true,
     'add-drop-table' => true,
     'single-transaction' => true,
+    'lock-tables' => false,
 ];
 
 $console = new PrivateDump\Console();
