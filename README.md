@@ -46,7 +46,7 @@ composer require ashleyhindle/private-dump
 Install with [curl](https://curl.haxx.se/)
 
 ```bash
-curl -Lo private-dump https://github.com/ashleyhindle/private-dump/releases/download/v0.0.7/private-dump
+curl -Lo private-dump https://github.com/cazana/private-dump/releases/download/v0.0.7/private-dump
 chmod a+x private-dump 
 ```
 
