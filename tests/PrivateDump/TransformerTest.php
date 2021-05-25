@@ -43,6 +43,13 @@ class TransformerTest extends TestCase
     }
 
     /** @test */
+    public function fake_car_faker_plugin_works()
+    {
+        $vehicleArray = $this->transformer->transform('not required', '@vehicleArray');
+        $this->assertArrayHasKey('brand', $vehicleArray);
+        $this->assertArrayHasKey('model', $vehicleArray);    }
+
+    /** @test */
     public function max_modifier_works()
     {
         $this->assertEquals(8, strlen($this->transformer->transform('test', '@randomString|max:8')));
