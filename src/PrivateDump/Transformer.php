@@ -3,6 +3,7 @@
 namespace PrivateDump;
 
 use Faker\Generator;
+use PhpParser\Node\Param;
 
 class Transformer
 {
@@ -93,8 +94,11 @@ class Transformer
      *
      * @return mixed
      */
-    public function transformOriginal($value)
+    public function transformOriginal($value, ?int $max = null)
     {
+        if ($max) {
+            return substr($value, 0, $max);
+        }
         return $value;
     }
 
@@ -126,9 +130,9 @@ class Transformer
             return $replacement;
         }
 
-        // Transformer has modifiers, let's use them
+        // Faker Transformer has modifiers, let's use them
         if (strpos($replacement, '|') !== false) {
-            list($replacement, $modifiers) = explode('|', $replacement, 2);
+            [$replacement, $modifiers] = explode('|', $replacement, 2);
             $modifiers = explode(',', $modifiers);
         }
 
@@ -142,38 +146,16 @@ class Transformer
         $ownMethod = sprintf('transform%s', ucwords(strtolower($replacement)));
 
         try {
-            $newValue = method_exists($this, $ownMethod) ? $this->$ownMethod($value) : $this->faker->$replacement;
+            $newValue = method_exists($this, $ownMethod)
+                ? $this->$ownMethod($value, ...$modifiers)
+                : $this->faker->$replacement(...$modifiers);
+
         } catch (\Exception $e) {
             echo sprintf('[error] Transformer not found, please fix and retry: [%s]', $originalReplacement) . PHP_EOL;
             exit(9);
         }
 
-        return $this->modifyValue($newValue, $modifiers);
+        return $newValue;
     }
 
-    /**
-     * @param $value
-     * @param array $modifiers - Modifiers for the resulting value, currently only supporting 'max'. E.g. min:4,max:40
-     *
-     * @return string
-     */
-    private function modifyValue($value, array $modifiers)
-    {
-        if (empty($modifiers)) {
-            return $value;
-        }
-
-        foreach ($modifiers as $modifier) {
-            list($rule, $modifierValue) = explode(':', $modifier);
-            switch ($rule) {
-                case 'max':
-                    return substr($value, 0, $modifierValue);
-                    break;
-                default:
-                    return $value;
-            }
-        }
-
-        return $value;
-    }
 }
