@@ -15,7 +15,6 @@ Private Dump requires PHP >= 5.6.0
 - [Usage](#usage)
 - [Configuration File](#configuration-file)
   - [Key Value Tables](#key-value-tables)
-  - [Modifiers](#modifiers)
 - [Replacements](#replacements)
   - [Text](#text)
   - [Dates](#dates)
@@ -168,26 +167,7 @@ Private Dump supports replacing values in a key-value store, by using an array i
 
 
 
-This is a bit more complicated than the standard replacements, but offers a lot of flexibility for anonymising all types of data. 
-
-
-
-#### Modifiers
-
-You can modify the resulting value (after replacements/transformers) to various ends.  The only currently supported modifier is `max` with more coming:
-
-```json
-{
-    "connection": {..},
-    "databases": {
-        ...
-        "username_column": "@userName|max:20"
-        ...
-    }
-}
-```
-
-
+This is a bit more complicated than the standard replacements, but offers a lot of flexibility for anonymising all types of data.
 
 # Replacements
 
@@ -197,6 +177,7 @@ All replacements below should be prefixed with an `@` as in the [example configu
 
 If you need to use a hardcoded value (active=0, completed=1) you can do this by omitting the `@`: `"active": 0` in the configuration file.  
 
+You can pass variables to commands as such `@numberBetween|100,1000`
 
 
 #### Text

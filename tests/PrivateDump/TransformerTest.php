@@ -47,12 +47,13 @@ class TransformerTest extends TestCase
     {
         $vehicleArray = $this->transformer->transform('not required', '@vehicleArray');
         $this->assertArrayHasKey('brand', $vehicleArray);
-        $this->assertArrayHasKey('model', $vehicleArray);    }
+        $this->assertArrayHasKey('model', $vehicleArray);
+    }
 
     /** @test */
-    public function max_modifier_works()
+    public function modifiers_work()
     {
-        $this->assertEquals(8, strlen($this->transformer->transform('test', '@randomString|max:8')));
+        $this->assertEquals(10, $this->transformer->transform('test', '@numberBetween|10,10'));
     }
 
     /** @test */
@@ -65,6 +66,6 @@ class TransformerTest extends TestCase
     public function original_replacement_works()
     {
         $this->assertEquals('admin@example.com', $this->transformer->transform('admin@example.com', '@original'));
-        $this->assertEquals('admin@exa', $this->transformer->transform('admin@example.com', '@original|max:9'));
+        $this->assertEquals('admin@exa', $this->transformer->transform('admin@example.com', '@original|9'));
     }
 }
