@@ -34,6 +34,13 @@ class TransformerTest extends PHPUnit_Framework_TestCase
     }
 
     /** @test */
+    public function avatar_url_works()
+    {
+        $transformed = $this->transformer->transform('not required', '@avatarUrl');
+        $this->assertRegExp("/https\:\/\/www\.gravatar\.com\/avatar\/(.*)\?d=(.*)/", $transformed);
+    }
+
+    /** @test */
     public function max_modifier_works()
     {
         $this->assertEquals(8, strlen($this->transformer->transform('test', '@randomString|max:8')));

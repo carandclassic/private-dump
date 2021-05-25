@@ -88,6 +88,19 @@ class Transformer
         return $value;
     }
 
+    public function transformAvatarUrl($value) {
+        return sprintf(
+            "https://www.gravatar.com/avatar/%s?d=%s",
+            md5(strtolower($this->faker->email)),
+            $this->faker->randomElement([
+                'identicon',
+                'monsterid',
+                'mp',
+                'robohash',
+            ])
+        );
+    }
+
     /**
      * Transform given value based on the replacement string provided from the JSON
      * @param string $value
