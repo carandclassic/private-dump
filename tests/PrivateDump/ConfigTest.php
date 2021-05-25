@@ -1,8 +1,9 @@
 <?php
 
+use PHPUnit\Framework\TestCase;
 use PrivateDump\Config;
 
-class ConfigTest extends PHPUnit_Framework_TestCase
+class ConfigTest extends TestCase
 {
     /** @var Config */
     private $config;
@@ -49,9 +50,10 @@ class ConfigTest extends PHPUnit_Framework_TestCase
     }
 
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->getConfig('{"connection": {"username": "root", "password": "bigben", "hostname": "localhost"}, "databases": {"test": {}}}');
+        parent::setUp();
     }
 
     protected function getConfig($json, $overrides=[])
@@ -65,7 +67,7 @@ class ConfigTest extends PHPUnit_Framework_TestCase
         return $this->config;
     }
 
-    protected function tearDown()
+    protected function tearDown(): void
     {
         parent::tearDown();
         unlink($this->filename);
