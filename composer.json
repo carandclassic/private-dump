@@ -16,7 +16,8 @@
         "nategood/commando": "^0.3.0",
         "ifsnop/mysqldump-php": "^2.9",
         "fakerphp/faker": "^1.14.0",
-        "dflydev/dot-access-data": "^1.0"
+        "dflydev/dot-access-data": "^1.0",
+        "pelmered/fake-car": "^1.6"
     },
 
     "require-dev": {

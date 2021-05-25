@@ -6,6 +6,7 @@ use Faker\Generator;
 
 class Transformer
 {
+    static $booted = false;
     private $faker;
     private $transformerAliases = [
         'lorem' => 'sentence',
@@ -27,6 +28,15 @@ class Transformer
     public function __construct(Generator $faker)
     {
         $this->faker = $faker;
+        if (!self::$booted) {
+            $this->boot($faker);
+        }
+        $faker->addProvider(new \Faker\Provider\Fakecar($faker));
+    }
+
+    protected function boot(Generator $faker)
+    {
+        self::$booted = true;
     }
 
     /**

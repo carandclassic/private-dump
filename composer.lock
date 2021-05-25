@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "da5a74ecafd3c0102d34888958a2609a",
+    "content-hash": "1dfd84cbcc95ddc436f95679f70d6cf5",
     "packages": [
         {
             "name": "dflydev/dot-access-data",
@@ -297,6 +297,57 @@
                 "source": "https://github.com/nategood/commando/tree/dev"
             },
             "time": "2018-07-15T13:44:17+00:00"
+        },
+        {
+            "name": "pelmered/fake-car",
+            "version": "1.6",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/pelmered/fake-car.git",
+                "reference": "b66ad589cdd9c5458653d88bfd3de4d16cd3be6e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/pelmered/fake-car/zipball/b66ad589cdd9c5458653d88bfd3de4d16cd3be6e",
+                "reference": "b66ad589cdd9c5458653d88bfd3de4d16cd3be6e",
+                "shasum": ""
+            },
+            "require": {
+                "fakerphp/faker": "^1.10",
+                "php": "^7.3||^8.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^9.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Faker\\Provider\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Peter Elmered",
+                    "email": "peter@elmered.com"
+                }
+            ],
+            "description": "Fake-Car is a Faker provider that generates fake car data for you.",
+            "keywords": [
+                "car",
+                "car-faker",
+                "fake-car",
+                "faker",
+                "vehicle"
+            ],
+            "support": {
+                "issues": "https://github.com/pelmered/fake-car/issues",
+                "source": "https://github.com/pelmered/fake-car/tree/1.6"
+            },
+            "time": "2020-12-03T10:00:23+00:00"
         },
         {
             "name": "psr/container",
