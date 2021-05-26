@@ -4,10 +4,9 @@ Private Dump is a CLI tool which can create an anonymised dump of your MySQL dat
 It accomplishes this by reading a JSON configuration file which maps out which table columns should be modified and how.
 
 
+![travis-ci-build-status](https://travis-ci.org/cazana/private-dump.svg?branch=master) ![styleci-status](https://github.styleci.io/repos/166579859/shield)
 
-![travis-ci-build-status](https://travis-ci.org/ashleyhindle/private-dump.svg?branch=master) ![styleci-status](https://github.styleci.io/repos/166579859/shield)
-
-Private Dump requires PHP >= 5.6.0
+Private Dump requires PHP >= 7.3
 
 # Table of Contents
 
@@ -45,7 +44,7 @@ composer require ashleyhindle/private-dump
 Install with [curl](https://curl.haxx.se/)
 
 ```bash
-curl -Lo private-dump https://github.com/cazana/private-dump/releases/download/v0.0.7/private-dump
+curl -Lo private-dump https://github.com/cazana/private-dump/releases/download/v0.1.1/private-dump
 chmod a+x private-dump 
 ```
 
@@ -295,8 +294,8 @@ You can pass variables to commands as such `@numberBetween|100,1000`
 # Release Process
 
 1. Build the PHAR: `box build`
-2. Rename the PHAR: `mv bin/private-dump.phar bin/private-dump`
+2. Rename the PHAR: `mv bin/private-dump.phar ./private-dump`
 3. Update the version in `README.md`'s installation instructions based on the next version from `git tag --list`
 4. Tag the next release: `git tag -a vx.x.x -m "Release x.x.x"`
 5. Push: `git push origin --tags`
-6. [Edit release on GitHub](https://github.com/ashleyhindle/private-dump/releases/) attaching the newly created `bin/private-dump` file
+6. [Edit release on GitHub](https://github.com/cazana/private-dump/releases/) attaching the newly created `bin/private-dump` file
