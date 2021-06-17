@@ -4,7 +4,7 @@ Private Dump is a CLI tool which can create an anonymised dump of your MySQL dat
 It accomplishes this by reading a JSON configuration file which maps out which table columns should be modified and how.
 
 
-![travis-ci-build-status](https://travis-ci.org/carandclassic/private-dump.svg?branch=master) ![styleci-status](https://github.styleci.io/repos/166579859/shield)
+![travis-ci-build-status](https://travis-ci.com/carandclassic/private-dump.svg?branch=master) ![styleci-status](https://github.styleci.io/repos/166579859/shield)
 
 Private Dump requires PHP >= 7.3
 
