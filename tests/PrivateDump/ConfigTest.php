@@ -13,7 +13,7 @@ class ConfigTest extends TestCase
     public function weCanOverrideConnectionConfig()
     {
         $this->getConfig('{"connection": {"username": "root", "password": "bigben", "hostname": "localhost"}, "databases": {"test": {}}}', ['connection' => [
-            'password' => 'expelliarmus'
+            'password' => 'expelliarmus',
         ]]);
 
         $this->assertEquals('root', $this->config->get('connection.username'));
@@ -49,14 +49,13 @@ class ConfigTest extends TestCase
         $this->assertTrue($this->config->isValid());
     }
 
-
     protected function setUp(): void
     {
         $this->getConfig('{"connection": {"username": "root", "password": "bigben", "hostname": "localhost"}, "databases": {"test": {}}}');
         parent::setUp();
     }
 
-    protected function getConfig($json, $overrides=[])
+    protected function getConfig($json, $overrides = [])
     {
         $this->filename = tempnam(sys_get_temp_dir(), 'private-dump');
         file_put_contents($this->filename, $json);
