@@ -7,23 +7,23 @@ use PhpParser\Node\Param;
 
 class Transformer
 {
-    static $booted = false;
+    public static $booted = false;
     private $faker;
     private $transformerAliases = [
-        'lorem' => 'sentence',
-        'fullName' => 'name',
-        'fullAddress' => 'address',
-        'loremSentence' => 'sentence',
-        'loremParagraph' => 'paragraph',
+        'lorem'           => 'sentence',
+        'fullName'        => 'name',
+        'fullAddress'     => 'address',
+        'loremSentence'   => 'sentence',
+        'loremParagraph'  => 'paragraph',
         'loremParagraphs' => 'paragraphs',
-        'randomString' => 'string',
-        'county' => 'state',
-        'username' => 'userName',
-        'barcodeEan13' => 'ean13',
-        'barcodeEan8' => 'ean8',
-        'barcodeIsbn13' => 'isbn13',
-        'barcodeIsbn10' => 'isbn10',
-        'email' => 'safeEmail',
+        'randomString'    => 'string',
+        'county'          => 'state',
+        'username'        => 'userName',
+        'barcodeEan13'    => 'ean13',
+        'barcodeEan8'     => 'ean8',
+        'barcodeIsbn13'   => 'isbn13',
+        'barcodeIsbn10'   => 'isbn10',
+        'email'           => 'safeEmail',
     ];
 
     public function __construct(Generator $faker)
@@ -41,7 +41,7 @@ class Transformer
     }
 
     /**
-     * Generate random string
+     * Generate random string.
      *
      * @param string $value
      *
@@ -99,12 +99,14 @@ class Transformer
         if ($max) {
             return substr($value, 0, $max);
         }
+
         return $value;
     }
 
-    public function transformAvatarUrl($value) {
+    public function transformAvatarUrl($value)
+    {
         return sprintf(
-            "https://www.gravatar.com/avatar/%s?d=%s",
+            'https://www.gravatar.com/avatar/%s?d=%s',
             md5(strtolower($this->faker->email)),
             $this->faker->randomElement([
                 'identicon',
@@ -116,7 +118,8 @@ class Transformer
     }
 
     /**
-     * Transform given value based on the replacement string provided from the JSON
+     * Transform given value based on the replacement string provided from the JSON.
+     *
      * @param string $value
      * @param string $replacement
      *
@@ -149,13 +152,11 @@ class Transformer
             $newValue = method_exists($this, $ownMethod)
                 ? $this->$ownMethod($value, ...$modifiers)
                 : $this->faker->$replacement(...$modifiers);
-
         } catch (\Exception $e) {
-            echo sprintf('[error] Transformer not found, please fix and retry: [%s]', $originalReplacement) . PHP_EOL;
+            echo sprintf('[error] Transformer not found, please fix and retry: [%s]', $originalReplacement).PHP_EOL;
             exit(9);
         }
 
         return $newValue;
     }
-
 }

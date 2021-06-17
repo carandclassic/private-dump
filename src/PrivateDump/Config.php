@@ -1,4 +1,5 @@
 <?php
+
 namespace PrivateDump;
 
 use Dflydev\DotAccessData\Data;
@@ -20,7 +21,7 @@ class Config
 
     /**
      * @param string $filename
-     * @param array $overrides
+     * @param array  $overrides
      */
     public function __construct($filename, array $overrides = [])
     {
