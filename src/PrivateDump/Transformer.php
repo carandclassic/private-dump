@@ -166,6 +166,9 @@ class Transformer
         }
 
 
+        // Check if replacement matches the "@replacementObject(name).accessor" format,
+        // in which case a named object will be placed in the object cache.
+
         $object = null;
         $matches = null;
         if (preg_match('/^@(\w+)\((\w+\))\.(.*)$/', $replacement, $matches)) {
@@ -175,12 +178,14 @@ class Transformer
             if (array_key_exists($objectName, $this->objectCache)) {
                 $object = $this->objectCache[$objectName];
             } else {
-                $getObjectMethod = sprintf('transformObject%s', $objectType);
+                $getObjectMethod = sprintf('transformObject%s', ucwords(strtolower($objectType)));
                 if (method_exists($this, $getObjectMethod)) {
                     $object = $this->$getObjectMethod();
                     $this->objectCache[$objectName] = $object;
                 }
             }
+
+            // Replace with only the accessor part
             $replacement = "@{$matches[3]}";
         }
 
