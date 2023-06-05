@@ -68,4 +68,35 @@ class TransformerTest extends TestCase
         $this->assertEquals('admin@example.com', $this->transformer->transform('admin@example.com', '@original'));
         $this->assertEquals('admin@exa', $this->transformer->transform('admin@example.com', '@original|9'));
     }
+
+    /** @test */
+    public function seeder_works()
+    {
+        $this->transformer->seed(123);
+
+        $firstEmail = $this->transformer->transform('some@example.com', '@email');
+        $secondEmail = $this->transformer->transform('some@example.com', '@email');
+
+        $this->transformer->seed(123);
+        $thirdEmail = $this->transformer->transform('some@example.com', '@email');
+        $fourthEmail = $this->transformer->transform('some@example.com', '@email');
+
+        $this->assertEquals($firstEmail, $thirdEmail);
+        $this->assertEquals($secondEmail, $fourthEmail);
+    }
+
+    /** @test */
+    public function object_works()
+    {
+        $user1Email = $this->transformer->transform('', '@user(user1).email');
+        $user1FirstName = $this->transformer->transform('', '@user(user1).firstName');
+        $user1LastName = $this->transformer->transform('', '@user(user1).lastName');
+
+        $user2FirstName = $this->transformer->transform('', '@user(user2).firstName');
+        $user2LastName = $this->transformer->transform('', '@user(user2).lastName');
+
+        $this->assertEquals($user1Email, sprintf('%s.%s@example.com', mb_strtolower($user1FirstName), mb_strtolower($user1LastName)));
+
+        $this->assertNotEquals($user1FirstName, $user2FirstName);
+    }
 }
