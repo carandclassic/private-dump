@@ -41,6 +41,16 @@ class Transformer
     }
 
     /**
+     * Seed the faker library.
+     *
+     * @param int $value
+     */
+    public function seed($value)
+    {
+        $this->faker->seed($value);
+    }
+
+    /**
      * Generate random string.
      *
      * @param string $value
