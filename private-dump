@@ -62,6 +62,20 @@ foreach ($databases as $databaseName => $tables) {
             $transformer->seed((int)$row[$tableConfig['@seed']]);
         }
 
+        if (isset($tableConfig['@keepif'])) {
+            if (!isset($tableConfig['@keepif']['regex']) || !isset($tableConfig['@keepif']['column'])) {
+                echo "@keepif requires one column and one regex key".PHP_EOL;
+                exit(1);
+            }
+
+            $keepIfColumn = $tableConfig['@keepif']['column'];
+            $keepIfRegexp = '/' . $tableConfig['@keepif']['regex'] . '/';
+
+            if ($keepIfColumn !== null && array_key_exists($keepIfColumn, $row)) {
+                if (preg_match($keepIfRegexp, $row[$keepIfColumn]) === 1) {
+                    return $row;
+                }
+            }
         }
 
         foreach ($row as $colName => $colValue) {
