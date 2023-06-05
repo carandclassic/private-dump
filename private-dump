@@ -51,38 +51,45 @@ foreach ($databases as $databaseName => $tables) {
         $dumper->setTableWheres($tableWheres);
     }
 
-    $dumper->setTransformColumnValueHook(function ($tableName, $colName, $colValue, $row) use ($tables, $transformer) {
-        // No transformers for this table
+    $dumper->setTransformTableRowHook(function ($tableName, array $row) use ($tables, $transformer) {
         if (!array_key_exists($tableName, $tables)) {
-            return $colValue;
+            return $row;
         }
 
-        // This column doesn't have a transformer
-        if (!array_key_exists($colName, $tables[$tableName])) {
-            return $colValue;
+        $tableConfig = $tables[$tableName];
+
         }
 
-        $columnReplacer = $tables[$tableName][$colName];
-
-        // Key value store, but also possible $options
-        if (is_array($columnReplacer)) {
-            // Key value store - $where on a different column name
-            // If the value matches a key in '$transformers' then we can replace the value as normal, otherwise
-            //    we will return the value as it is
-            if (!empty($columnReplacer['$link'])) {
-                foreach ($columnReplacer['$transformers'] as $associateColumnValue => $replacer) {
-                    // If this colValue == associate_column's value, then we can replace
-                    if ($associateColumnValue == $row[$columnReplacer['$link']]) {
-                        return $transformer->transform($colValue, $replacer);
-                    }
-                }
+        foreach ($row as $colName => $colValue) {
+            if (!array_key_exists($colName, $tables[$tableName])) {
+                continue;
             }
 
-            // Backup - return same column value if an array and no ^ transformer above
-            return $colValue;
+           $columnReplacer = $tables[$tableName][$colName];
+
+            // Key value store, but also possible $options
+            if (is_array($columnReplacer)) {
+                // Key value store - $where on a different column name
+                // If the value matches a key in '$transformers' then we can replace the value as normal, otherwise
+                //    we will return the value as it is
+                if (!empty($columnReplacer['$link'])) {
+                    foreach ($columnReplacer['$transformers'] as $associateColumnValue => $replacer) {
+                        // If this colValue == associate_column's value, then we can replace
+                        if ($associateColumnValue == $row[$columnReplacer['$link']]) {
+                            $row[$colName] = $transformer->transform($colValue, $replacer);
+                            break;
+                        }
+                    }
+                }
+
+                // Backup - use same column value if an array and no ^ transformer above
+                continue;
+            }
+
+            $row[$colName] = $transformer->transform($colValue, $columnReplacer);
         }
 
-        return $transformer->transform($colValue, $columnReplacer);
+        return $row;
     });
 
     try {
