@@ -58,6 +58,8 @@ foreach ($databases as $databaseName => $tables) {
 
         $tableConfig = $tables[$tableName];
 
+        $transformer->forget();
+
         if (isset($tableConfig['@seed']) && is_numeric($row[$tableConfig['@seed']])) {
             $transformer->seed((int)$row[$tableConfig['@seed']]);
         }
