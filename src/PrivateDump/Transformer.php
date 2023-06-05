@@ -8,6 +8,7 @@ use PhpParser\Node\Param;
 class Transformer
 {
     public static $booted = false;
+    private $objectCache = [];
     private $faker;
     private $transformerAliases = [
         'lorem'           => 'sentence',
@@ -48,6 +49,14 @@ class Transformer
     public function seed($value)
     {
         $this->faker->seed($value);
+    }
+
+    /**
+     * Forget cached values
+     */
+    public function forget()
+    {
+        $this->objectCache = [];
     }
 
     /**
@@ -127,6 +136,19 @@ class Transformer
         );
     }
 
+    protected function transformObjectUser()
+    {
+        $user = new \stdClass();
+
+        $user->firstName = $this->faker->firstName();
+        $user->lastName = $this->faker->lastName();
+        $user->email = sprintf('%s.%s@example.com', mb_strtolower($user->firstName), mb_strtolower($user->lastName));
+        $user->userName = $user->email;
+        $user->fullName = "{$user->firstName} {$user->lastName}";
+
+        return $user;
+    }
+
     /**
      * Transform given value based on the replacement string provided from the JSON.
      *
@@ -143,6 +165,25 @@ class Transformer
             return $replacement;
         }
 
+
+        $object = null;
+        $matches = null;
+        if (preg_match('/^@(\w+)\((\w+\))\.(.*)$/', $replacement, $matches)) {
+            $objectType = $matches[1];
+            $objectName = $matches[2];
+
+            if (array_key_exists($objectName, $this->objectCache)) {
+                $object = $this->objectCache[$objectName];
+            } else {
+                $getObjectMethod = sprintf('transformObject%s', $objectType);
+                if (method_exists($this, $getObjectMethod)) {
+                    $object = $this->$getObjectMethod();
+                    $this->objectCache[$objectName] = $object;
+                }
+            }
+            $replacement = "@{$matches[3]}";
+        }
+
         // Faker Transformer has modifiers, let's use them
         if (strpos($replacement, '|') !== false) {
             [$replacement, $modifiers] = explode('|', $replacement, 2);
@@ -152,16 +193,20 @@ class Transformer
         $replacement = preg_replace('/^@/', '', $replacement);
         $originalReplacement = $replacement;
 
-        if (array_key_exists($replacement, $this->transformerAliases)) {
+        if ($object === null && array_key_exists($replacement, $this->transformerAliases)) {
             $replacement = $this->transformerAliases[$replacement];
         }
 
         $ownMethod = sprintf('transform%s', ucwords(strtolower($replacement)));
 
         try {
-            $newValue = method_exists($this, $ownMethod)
-                ? $this->$ownMethod($value, ...$modifiers)
-                : $this->faker->$replacement(...$modifiers);
+            if ($object !== null) {
+                $newValue = $object->$replacement;
+            } else {
+                $newValue = method_exists($this, $ownMethod)
+                    ? $this->$ownMethod($value, ...$modifiers)
+                    : $this->faker->$replacement(...$modifiers);
+            }
         } catch (\Exception $e) {
             echo sprintf('[error] Transformer not found, please fix and retry: [%s]', $originalReplacement).PHP_EOL;
             exit(9);
