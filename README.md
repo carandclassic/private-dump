@@ -94,6 +94,8 @@ The configuration file is a JSON dictionary containing:
 - database connection details
 - list of databases to dump
 - list of tables with replacements or transformers
+  - Seeder - one column can be used as a row-seeder to get repeatability in consecutive dumps
+  - keepers - some rows can be kept as is, if a specified column matches a regular expression
   - columns with replacements or transformers
   - options to restrict output
     - `where` - Added to the query when retrieving data to dump: `... WHERE xxx...`
@@ -132,6 +134,18 @@ An example configuration, and configurations for popular applications, exist in 
                 "$options": { -- Only options to limit data, no replacements
                     "where": "is_active=1"
                 }
+            }
+        }
+        "databaseThree": {
+            "users": {
+                "@seed": "id", -- Seed each row using user id, to get repeatability
+                "@keepif": { -- Keep all rows with emails using domain @ourdomain.com intact
+                    "column": "email",
+                    "regex": "^.*@ourdomain.com$"
+                }
+                "first_name": "@user(current_user).firstName",
+                "last_name": "@user(current_user).lastName",
+                "email": "@user(current_user).email", - email will be based on the first and last names
             }
         }
     }
