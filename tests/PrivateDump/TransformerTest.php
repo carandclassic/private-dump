@@ -92,11 +92,10 @@ class TransformerTest extends TestCase
         $user1FirstName = $this->transformer->transform('', '@user(user1).firstName');
         $user1LastName = $this->transformer->transform('', '@user(user1).lastName');
 
-        $user2FirstName = $this->transformer->transform('', '@user(user2).firstName');
-        $user2LastName = $this->transformer->transform('', '@user(user2).lastName');
+        $user2Email = $this->transformer->transform('', '@user(user2).email');
 
-        $this->assertEquals($user1Email, sprintf('%s.%s@example.com', mb_strtolower($user1FirstName), mb_strtolower($user1LastName)));
+        $this->assertStringStartsWith(sprintf('%s.%s-', mb_strtolower($user1FirstName), mb_strtolower($user1LastName)), $user1Email);
 
-        $this->assertNotEquals($user1FirstName, $user2FirstName);
+        $this->assertNotEquals($user1Email, $user2Email);
     }
 }
