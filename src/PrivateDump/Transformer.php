@@ -142,7 +142,7 @@ class Transformer
 
         $user->firstName = $this->faker->firstName();
         $user->lastName = $this->faker->lastName();
-        $user->email = sprintf('%s.%s@example.com', mb_strtolower($user->firstName), mb_strtolower($user->lastName));
+        $user->email = sprintf('%s.%s-%u@example.com', mb_strtolower($user->firstName), mb_strtolower($user->lastName), $this->faker->randomNumber(3));
         $user->userName = $user->email;
         $user->fullName = "{$user->firstName} {$user->lastName}";
 
