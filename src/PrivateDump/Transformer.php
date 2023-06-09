@@ -9,6 +9,7 @@ class Transformer
 {
     public static $booted = false;
     private $objectCache = [];
+    private $currentSeed = 0;
     private $faker;
     private $transformerAliases = [
         'lorem'           => 'sentence',
@@ -48,6 +49,7 @@ class Transformer
      */
     public function seed($value)
     {
+        $this->currentSeed = $value;
         $this->faker->seed($value);
     }
 
@@ -142,7 +144,13 @@ class Transformer
 
         $user->firstName = $this->faker->firstName();
         $user->lastName = $this->faker->lastName();
-        $user->email = sprintf('%s.%s-%u@example.com', mb_strtolower($user->firstName), mb_strtolower($user->lastName), $this->faker->randomNumber(3));
+        $randomizer = $this->currentSeed ?? $this->faker->randomNumber(6);
+        $user->email = sprintf(
+            '%s.%s-%u@example.com',
+            mb_strtolower($user->firstName),
+            mb_strtolower($user->lastName),
+            $randomizer
+        );
         $user->userName = $user->email;
         $user->fullName = "{$user->firstName} {$user->lastName}";
 
