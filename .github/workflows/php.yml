@@ -6,13 +6,23 @@ on:
   pull_request:
     branches: [ master ]
 
+permissions: {}
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
 jobs:
   build:
-
+    name: build
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
 
     steps:
     - uses: actions/checkout@0717577d45739eb3c851188b29f50ed6c0b2194e # v2.8.0
+      with:
+        persist-credentials: false
 
     - name: Cache Composer packages
       id: composer-cache
